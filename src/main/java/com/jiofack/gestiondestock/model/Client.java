@@ -1,14 +1,12 @@
 package com.jiofack.gestiondestock.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -33,6 +31,9 @@ public class Client extends AbstractEntity {
 
     @Column(name = "numtel")
     private String numTel;
+
+    @Column(name = "identreprise")
+    private Integer idEntreprise;
 
     @OneToMany(mappedBy = "client")
     private List<CommandeClient> commandeClients;
