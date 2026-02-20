@@ -7,10 +7,12 @@ import com.jiofack.gestiondestock.exception.InvalidEntityException;
 import com.jiofack.gestiondestock.model.Entreprise;
 import com.jiofack.gestiondestock.repository.EntrepriseRepository;
 import com.jiofack.gestiondestock.services.EntrepriseService;
+import com.jiofack.gestiondestock.services.ImageStorageService;
 import com.jiofack.gestiondestock.validator.EntrepriseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +24,20 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
     private EntrepriseRepository entrepriseRepository;
 
+    private ImageStorageService imageStorageService;
+
     @Autowired
     public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository) {
         this.entrepriseRepository = entrepriseRepository;
     }
 
     @Override
-    public EntrepriseDto save(EntrepriseDto dto) {
+    public EntrepriseDto save(EntrepriseDto dto, MultipartFile photoFile) {
+
+        if (photoFile != null && !photoFile.isEmpty()) {
+            dto.setPhoto(imageStorageService.uploadImage(photoFile));
+        }
+
         List<String> errors = EntrepriseValidator.validate(dto);
         if (!errors.isEmpty()) {
             log.error("Entreprise is not valid {}", dto);

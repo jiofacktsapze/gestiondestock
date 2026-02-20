@@ -6,11 +6,13 @@ import com.jiofack.gestiondestock.exception.ErrorCodes;
 import com.jiofack.gestiondestock.exception.InvalidEntityException;
 import com.jiofack.gestiondestock.model.Utilisateur;
 import com.jiofack.gestiondestock.repository.UtilisateurRepository;
+import com.jiofack.gestiondestock.services.ImageStorageService;
 import com.jiofack.gestiondestock.services.UtilisateurService;
 import com.jiofack.gestiondestock.validator.UtilisateurValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +24,20 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     private UtilisateurRepository utilisateurRepository;
 
+    private ImageStorageService imageStorageService;
+
     @Autowired
     public UtilisateurServiceImpl(UtilisateurRepository utilisateurRepository) {
         this.utilisateurRepository = utilisateurRepository;
     }
 
     @Override
-    public UtilisateurDto save(UtilisateurDto dto) {
+    public UtilisateurDto save(UtilisateurDto dto, MultipartFile photoFile) {
+
+        if (photoFile != null && !photoFile.isEmpty()) {
+            dto.setPhoto(imageStorageService.uploadImage(photoFile));
+        }
+
         List<String> errors = UtilisateurValidator.validate(dto);
         if (!errors.isEmpty()) {
             log.error("Utilisateur is not valid {}", dto);

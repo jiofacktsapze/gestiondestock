@@ -5,6 +5,7 @@ import com.jiofack.gestiondestock.dto.EntrepriseDto;
 import com.jiofack.gestiondestock.services.EntrepriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class EntrepriseController implements EntrepriseApi {
         this.entrepriseService = entrepriseService;
     }
     @Override
-    public EntrepriseDto save(EntrepriseDto dto) {
-        return entrepriseService.save(dto);
+    public EntrepriseDto save(EntrepriseDto dto, MultipartFile photoFile) {
+        return entrepriseService.save(dto, photoFile);
     }
 
     @Override

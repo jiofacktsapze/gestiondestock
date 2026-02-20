@@ -9,11 +9,13 @@ import com.jiofack.gestiondestock.model.Article;
 import com.jiofack.gestiondestock.model.Client;
 import com.jiofack.gestiondestock.repository.ClientRepository;
 import com.jiofack.gestiondestock.services.ClientService;
+import com.jiofack.gestiondestock.services.ImageStorageService;
 import com.jiofack.gestiondestock.validator.ArticleValidator;
 import com.jiofack.gestiondestock.validator.ClientValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,13 +27,20 @@ public class ClientServiceImpl implements ClientService {
 
     private ClientRepository clientRepository;
 
+    private ImageStorageService imageStorageService;
+
     @Autowired
     public ClientServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
     @Override
-    public ClientDto save(ClientDto dto) {
+    public ClientDto save(ClientDto dto, MultipartFile photoFile) {
+
+        if (photoFile != null && !photoFile.isEmpty()) {
+            dto.setPhoto(imageStorageService.uploadImage(photoFile));
+        }
+
         List<String> errors = ClientValidator.validate(dto);
         if (!errors.isEmpty()) {
             log.error("Client is not valid {}", dto);

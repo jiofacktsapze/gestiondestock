@@ -34,15 +34,15 @@ public class Utilisateur extends AbstractEntity {
     private String motDePasse;
 
     @Column(name = "adresse")
-    private AdresseDto adresse;
+    private Adresse adresse;
 
     @Column(name = "photo")
     private String photo;
 
     @ManyToOne
     @JoinColumn(name = "identreprise")
-    private EntrepriseDto entreprise;
+    private Entreprise entreprise;
 
-    private List<RolesDto> roles;
+    private List<Roles> roles;
 
 }

@@ -3,6 +3,7 @@ package com.jiofack.gestiondestock.controller.api;
 import com.jiofack.gestiondestock.dto.UtilisateurDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import static com.jiofack.gestiondestock.utils.Contants.APP_ROOT;
@@ -10,7 +11,7 @@ import static com.jiofack.gestiondestock.utils.Contants.APP_ROOT;
 public interface UtilisateurApi {
 
     @PostMapping(value = APP_ROOT + "/utilisateurs/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    UtilisateurDto save(@RequestBody UtilisateurDto dto);
+    UtilisateurDto save(@RequestBody UtilisateurDto dto, @RequestPart(value = "photo", required = false) MultipartFile photoFile);
 
     @GetMapping(value = APP_ROOT + "/utilisateurs/{idUtilisateur}", produces = MediaType.APPLICATION_JSON_VALUE)
     UtilisateurDto findById(@PathVariable("idUtilisateur") Integer id);

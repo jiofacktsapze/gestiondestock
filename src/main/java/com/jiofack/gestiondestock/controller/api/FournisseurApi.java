@@ -3,6 +3,7 @@ package com.jiofack.gestiondestock.controller.api;
 import com.jiofack.gestiondestock.dto.FournisseurDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import static com.jiofack.gestiondestock.utils.Contants.APP_ROOT;
@@ -10,7 +11,7 @@ import static com.jiofack.gestiondestock.utils.Contants.APP_ROOT;
 public interface FournisseurApi {
 
     @PostMapping(value = APP_ROOT + "/fournisseurs/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    FournisseurDto save(@RequestBody FournisseurDto dto);
+    FournisseurDto save(@RequestBody FournisseurDto dto, @RequestPart(value = "photo", required = false) MultipartFile photoFile);
 
     @GetMapping(value = APP_ROOT + "/fournisseurs/{idFournisseur}", produces = MediaType.APPLICATION_JSON_VALUE)
     FournisseurDto findById(@PathVariable("idFournisseur") Integer id);

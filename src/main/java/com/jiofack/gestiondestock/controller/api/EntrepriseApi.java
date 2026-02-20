@@ -3,6 +3,7 @@ package com.jiofack.gestiondestock.controller.api;
 import com.jiofack.gestiondestock.dto.EntrepriseDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import static com.jiofack.gestiondestock.utils.Contants.APP_ROOT;
@@ -10,7 +11,7 @@ import static com.jiofack.gestiondestock.utils.Contants.APP_ROOT;
 public interface EntrepriseApi {
 
     @PostMapping(value = APP_ROOT + "/entreprises/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    EntrepriseDto save(@RequestBody EntrepriseDto dto);
+    EntrepriseDto save(@RequestBody EntrepriseDto dto, @RequestPart(value = "photo", required = false) MultipartFile photoFile);
 
     @GetMapping(value = APP_ROOT + "/entreprises/{idEntreprise}", produces = MediaType.APPLICATION_JSON_VALUE)
     EntrepriseDto findById(@PathVariable("idEntreprise") Integer id);
@@ -18,6 +19,6 @@ public interface EntrepriseApi {
     @GetMapping(value = APP_ROOT + "/entreprises/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<EntrepriseDto> findAll();
 
-    @DeleteMapping(value = APP_ROOT + "/entreprises/delete/{idEntreprise")
+    @DeleteMapping(value = APP_ROOT + "/entreprises/delete/{idEntreprise}")
     void delete(@PathVariable("idEntreprise") Integer id);
 }

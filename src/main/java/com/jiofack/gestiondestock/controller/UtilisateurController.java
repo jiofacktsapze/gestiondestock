@@ -5,6 +5,7 @@ import com.jiofack.gestiondestock.dto.UtilisateurDto;
 import com.jiofack.gestiondestock.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,8 +20,8 @@ public class UtilisateurController implements UtilisateurApi {
     }
 
     @Override
-    public UtilisateurDto save(UtilisateurDto dto) {
-        return utilisateurService.save(dto);
+    public UtilisateurDto save(UtilisateurDto dto, MultipartFile photoFile) {
+        return utilisateurService.save(dto, photoFile);
     }
 
     @Override

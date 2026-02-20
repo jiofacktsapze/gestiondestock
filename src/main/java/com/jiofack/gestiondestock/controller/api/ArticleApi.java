@@ -3,6 +3,7 @@ package com.jiofack.gestiondestock.controller.api;
 import com.jiofack.gestiondestock.dto.ArticleDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import static com.jiofack.gestiondestock.utils.Contants.APP_ROOT;
@@ -10,7 +11,7 @@ import static com.jiofack.gestiondestock.utils.Contants.APP_ROOT;
 public interface ArticleApi {
 
     @PostMapping(value = APP_ROOT + "/articles/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ArticleDto save(@RequestBody ArticleDto dto);
+    ArticleDto save(@RequestBody ArticleDto dto, @RequestPart(value = "photo", required = false) MultipartFile photoFile);
 
     @GetMapping(value = APP_ROOT + "/articles/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
     ArticleDto findById(@PathVariable("idArticle") Integer id);

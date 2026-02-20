@@ -22,7 +22,7 @@ public class Entreprise extends AbstractEntity {
     @Column(name = "description")
     private String description;
 
-    private AdresseDto adresse;
+    private Adresse adresse;
 
     @Column(name = "codefiscal")
     private String codeFiscal;
@@ -40,5 +40,5 @@ public class Entreprise extends AbstractEntity {
     private String steWeb;
 
     @OneToMany(mappedBy = "entreprise")
-    private List<UtilisateurDto> utilisateurs;
+    private List<Utilisateur> utilisateurs;
 }

@@ -7,10 +7,12 @@ import com.jiofack.gestiondestock.exception.InvalidEntityException;
 import com.jiofack.gestiondestock.model.Fournisseur;
 import com.jiofack.gestiondestock.repository.FournisseurRepository;
 import com.jiofack.gestiondestock.services.FournisseurService;
+import com.jiofack.gestiondestock.services.ImageStorageService;
 import com.jiofack.gestiondestock.validator.FournisseurValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +24,20 @@ public class FournisseurServiceImpl implements FournisseurService {
 
     private FournisseurRepository fournisseurRepository;
 
+    private ImageStorageService imageStorageService;
+
     @Autowired
     public FournisseurServiceImpl(FournisseurRepository fournisseurRepository) {
         this.fournisseurRepository = fournisseurRepository;
     }
 
     @Override
-    public FournisseurDto save(FournisseurDto dto) {
+    public FournisseurDto save(FournisseurDto dto, MultipartFile photoFile) {
+
+        if (photoFile != null && !photoFile.isEmpty()) {
+            dto.setPhoto(imageStorageService.uploadImage(photoFile));
+        }
+
         List<String> errors = FournisseurValidator.validate(dto);
         if (!errors.isEmpty()) {
             log.error("Fournisseur is not valid {}", dto);

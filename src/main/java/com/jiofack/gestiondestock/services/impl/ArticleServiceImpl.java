@@ -7,11 +7,13 @@ import com.jiofack.gestiondestock.exception.InvalidEntityException;
 import com.jiofack.gestiondestock.model.Article;
 import com.jiofack.gestiondestock.repository.ArticleRepository;
 import com.jiofack.gestiondestock.services.ArticleService;
+import com.jiofack.gestiondestock.services.ImageStorageService;
 import com.jiofack.gestiondestock.validator.ArticleValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +25,22 @@ public class ArticleServiceImpl implements ArticleService {
 
     private ArticleRepository articleRepository;
 
+    private ImageStorageService imageStorageService;
+
+
     @Autowired
     public ArticleServiceImpl(ArticleRepository articleRepository){
         this.articleRepository = articleRepository;
     }
 
     @Override
-    public ArticleDto save(ArticleDto dto) {
+    public ArticleDto save(ArticleDto dto, MultipartFile photoFile) {
+
+        if (photoFile != null && !photoFile.isEmpty()) {
+            String photoUrl = imageStorageService.uploadImage(photoFile);
+            dto.setPhoto(photoUrl);
+        }
+
         List<String> errors = ArticleValidator.validate(dto);
         if (!errors.isEmpty()) {
             log.error("Article is not valid {}", dto);

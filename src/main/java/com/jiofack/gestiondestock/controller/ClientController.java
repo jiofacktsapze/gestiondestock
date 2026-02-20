@@ -3,6 +3,7 @@ package com.jiofack.gestiondestock.controller;
 import com.jiofack.gestiondestock.controller.api.ClientApi;
 import com.jiofack.gestiondestock.dto.ClientDto;
 import com.jiofack.gestiondestock.services.ClientService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,22 +16,22 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    public ClientDto save(ClientDto dto) {
-        return null;
+    public ClientDto save(ClientDto dto, MultipartFile photoFile) {
+        return clientService.save(dto, photoFile);
     }
 
     @Override
     public ClientDto findById(Integer id) {
-        return null;
+        return clientService.findById(id);
     }
 
     @Override
     public List<ClientDto> findAll() {
-        return List.of();
+        return clientService.findAll();
     }
 
     @Override
     public void delete(Integer id) {
-
+        clientService.delete(id);
     }
 }

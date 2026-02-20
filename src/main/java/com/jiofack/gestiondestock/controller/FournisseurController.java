@@ -4,6 +4,7 @@ import com.jiofack.gestiondestock.dto.FournisseurDto;
 import com.jiofack.gestiondestock.services.FournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class FournisseurController implements FournisseurService {
     }
 
     @Override
-    public FournisseurDto save(FournisseurDto dto) {
-        return fournisseurService.save(dto);
+    public FournisseurDto save(FournisseurDto dto, MultipartFile photoFile) {
+        return fournisseurService.save(dto, photoFile);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.jiofack.gestiondestock.dto.ArticleDto;
 import com.jiofack.gestiondestock.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class ArticleController implements ArticleApi {
     }
 
     @Override
-    public ArticleDto save(ArticleDto dto) {
-        return articleService.save(dto);
+    public ArticleDto save(ArticleDto dto, MultipartFile photoFile) {
+        return articleService.save(dto, photoFile);
     }
 
     @Override
